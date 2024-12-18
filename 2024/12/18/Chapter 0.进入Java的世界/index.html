@@ -1,0 +1,766 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/joolin.png">
+  <link rel="icon" href="/img/joolin.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Joolin">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="【Java】Chapter 0——进入Java的世界 Chapter 0：进入Java的世界序言初知Java，认为是与C++异曲同工之妙的一款面向对象语言，仅此而已。后来听说其在世界范围内的名声，能与C、C++等众多语言齐头并进，作为世界上最常用的语言之一，想必肯定是有其独特之处，以及受众多程序员青睐的点。  在阅读了一些书籍以及面临学校的Java课程开设之后，对其的看法大有改观。它依旧还是一款面">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Java】Chapter 0——进入Java的世界">
+<meta property="og:url" content="https://skrrapper.github.io/2024/12/18/Chapter%200.%E8%BF%9B%E5%85%A5Java%E7%9A%84%E4%B8%96%E7%95%8C/index.html">
+<meta property="og:site_name" content="Joolin">
+<meta property="og:description" content="【Java】Chapter 0——进入Java的世界 Chapter 0：进入Java的世界序言初知Java，认为是与C++异曲同工之妙的一款面向对象语言，仅此而已。后来听说其在世界范围内的名声，能与C、C++等众多语言齐头并进，作为世界上最常用的语言之一，想必肯定是有其独特之处，以及受众多程序员青睐的点。  在阅读了一些书籍以及面临学校的Java课程开设之后，对其的看法大有改观。它依旧还是一款面">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20240921203952787.png">
+<meta property="og:image" content="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20240926194520543.png">
+<meta property="og:image" content="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20240926200239214.png">
+<meta property="article:published_time" content="2024-12-18T15:30:07.000Z">
+<meta property="article:modified_time" content="2024-12-18T16:07:23.494Z">
+<meta property="article:author" content="Joolin">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20240921203952787.png">
+  
+  
+  
+  <title>【Java】Chapter 0——进入Java的世界 - Joolin</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"skrrapper.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":100,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Joolin</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">【Java】Chapter 0——进入Java的世界</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-12-18 23:30" pubdate>
+          2024年12月18日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          28 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">【Java】Chapter 0——进入Java的世界</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>【Java】Chapter 0——进入Java的世界</p>
+<h2 id="Chapter-0：进入Java的世界"><a href="#Chapter-0：进入Java的世界" class="headerlink" title="Chapter 0：进入Java的世界"></a><em>Chapter 0</em>：进入Java的世界</h2><h2 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h2><p>初知Java，认为是与C++异曲同工之妙的一款面向对象语言，仅此而已。后来听说其在世界范围内的名声，能与C、C++等众多语言齐头并进，作为世界上最常用的语言之一，想必肯定是有其独特之处，以及受众多程序员青睐的点。</p>
+<p><img src="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20240921203952787.png" srcset="/img/loading.gif" lazyload alt="image-20240921203952787"></p>
+<p>在阅读了一些书籍以及面临学校的Java课程开设之后，对其的看法大有改观。它依旧还是一款面向对象的语言，但是又不那么常规；它有着千万种变化以及用不尽的库，等待人细细品味；我一直认为编程语言是一种艺术，那么Java也会是其中的一大艺术流派之集成。</p>
+<p>编程语言的目标是让你写出一个程序并且让其能够在编译器下运行，并且输出到终端——<strong>Java</strong>对于这一过程的适配堪称非常优秀。</p>
+<p>我们去探寻Java的历史，你会发现它的更新是呈指数型增长的；由于它实际上是借鉴过C++的前人之壮举，所以后期发展不说如履平地，但是起码起了一个好头——这才导致它发展愈来愈快愈来愈好。<img src="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20240926194520543.png" srcset="/img/loading.gif" lazyload alt="image-20240926194520543"></p>
+<ul>
+<li>Java发展史（关于历史，可看可不看，它仅仅是作为你拓展Java知识面的一个来源）：<ol>
+<li><strong>梦开始的地方</strong>：Java最开始只是<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Sun%E9%9B%BB%E8%85%A6">Sun微系统</a>（Sun MicroSystems）公司在1990年12月开始研究的一个内部项目。Sun微系统公司的一个叫做<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=%E5%B8%95%E7%89%B9%E9%87%8C%E5%85%8B%C2%B7%E8%AB%BE%E9%A0%93&action=edit&redlink=1">帕特里克·诺顿</a>的工程师被公司自己开发的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/C%2B%2B">C++</a>和<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/C%E8%AA%9E%E8%A8%80">C语言</a>编译器搞得焦头烂额，因为其中的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%8E%A5%E5%8F%A3">API</a>极其难用。帕特里克决定改用<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/NeXT">NeXT</a>，同时他也获得了研究公司的一个叫做<strong>“Stealth计划”</strong>的项目的机会。</li>
+<li>C++的缺陷引发的思考：项目成员发现C++太复杂以至很多开发者经常错误使用。他们发现C++缺少<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6_(%E8%A8%88%E7%AE%97%E6%A9%9F%E7%A7%91%E5%AD%B8)">垃圾回收</a>系统，还有可移植的安全性、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=%E5%88%86%E4%BD%88%E7%A8%8B%E5%BA%8F%E8%A8%AD%E8%A8%88&action=edit&redlink=1">分布程序设计</a>、和<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%9F%B7%E8%A1%8C%E7%B7%92">多线程</a>功能。最后，他们想要一种易于移植到各种设备上的平台。</li>
+<li>Java的初命名：最初，高斯林试图修改和扩展C++的功能，他自己称这种新语言为C++ – [<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Wikipedia:%E5%88%97%E6%98%8E%E6%9D%A5%E6%BA%90">来源请求]</a>，但是后来他放弃了。他将要创造出一种全新的语言，被他命名为“<strong>Oak</strong>”（橡树），以他的办公室外的橡树命名。</li>
+<li>Java名字的诞生：由于<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%95%86%E6%A0%87">商标</a>搜索显示Oak已被一家显卡制造商注册。于是同年，Oak被改名为<strong>Java</strong>。当使用十六进制编辑器打开由Java源代码编译出的二进制文件（.class文件）的话，最前面的32位将显示为CA FE BA BE，即词组“CAFE BABE”（咖啡屋宝贝）。</li>
+<li>至于 “Java” 这个名称到底出自谁的灵感 —— 由于留给 OAK 改名的时间非常紧迫，而且 OAK 即将发布新版本，在这样仓促的状态中，没人记得 Java 这个名称是谁提出来的。当时众说纷纭，有说是因为现场有人在喝名为Java的咖啡，也有人说是一名成员想起自己的爪哇岛上喝过Java咖啡，但是并没有很确切的答案。不过，作为一名咖啡爱好者来说，我很喜欢Java这个名字，同时也一直想找个机会品尝一下这名为Java的咖啡到底味道如何，或许我喝拿铁（Latte），也可以创造出一种叫做Latte的编程语言（bushi<br><img src="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20240926200239214.png" srcset="/img/loading.gif" lazyload alt="image-20240926200239214"></li>
+</ol>
+</li>
+</ul>
+<p>自1995月23日Java诞生以来，已有将近30年时间。在这期间，Java从第一个JDK——JDK1.0进化到了如今的Java SE 21，历经数十个版本的更新，Java正在不断改进技术以及对计算机技术的各种匹配和延申。Java是许多软件开发人员用于编写涉及科学计算和数学运算的应用程序的选择之一。这些程序通常被认为是快速和安全的，具有更高的便携性和低维护性。</p>
+<p>在这个编程语言横向发展的阶段，像C++、Java这类语言依旧处于独占鳌头的地位——这也说明了它们的重要性，毕竟现代高级语言也或多或少有借鉴以前的高级语言。没有一种编程语言是完美的，或者是不完美也是它们的一部分。就像C++受人诟病的不具备垃圾回收系统，Java有时也会由于其语言特性将简单问题复杂化。这都是独属于它们的属性，而众多优秀的项目、优雅的程序也是基于这些从而写出的。</p>
+<p>在接下来的时光，我会详细介绍Java的各类知识，探索其语言乐趣。如何写出第一个“Hello World”？以及如何使用Java写出专属自己的网站项目——笔者也在学习之中，希望各位能同我一起在Java学习感受编程的美好~<br>（ps：如有疏漏或者错误的点，敬请指出，期待斧正！）</p>
+<p>在进入Java世界之前，我们有四看，来探讨其编程思想以及对于深入了解有一个好的开头，分为以下四个“LOOK”：</p>
+<h2 id="一瞥：Java中重要的面向对象思想"><a href="#一瞥：Java中重要的面向对象思想" class="headerlink" title="一瞥：Java中重要的面向对象思想"></a>一瞥：Java中重要的面向对象思想</h2><p><strong>面向对象程序设计</strong>（英语：Object-oriented programming，<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%BC%A9%E5%86%99">缩写</a>：OOP）是种具有<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%AF%B9%E8%B1%A1_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">对象</a>概念的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%9E%8B">编程典范</a>，同时也是一种程序开发的抽象方针。“面向对象程序设计语言”的核心之一就是开发者在设计软件的时候可以使用自定义的类型和关联操作。<strong>代码和数据的实际集合体叫做“对象”</strong>。一个对象可以想象成绑定了很多“行为（代码）”和“状态（数据）”的物体。</p>
+<p>或许你听说过类（Class）这个概念，在面向对象程序设计中，类是创建对象的蓝图，也是整个OOP最基本的结构之一；对象指的是类的实例，</p>
+<h2 id="二察：Java中的核心概念以及重要组成部分"><a href="#二察：Java中的核心概念以及重要组成部分" class="headerlink" title="二察：Java中的核心概念以及重要组成部分"></a>二察：Java中的核心概念以及重要组成部分</h2><p>什么是方法、类、实例变量、源文件、为什么看起来和其他的语言有不同但又类似的结构？</p>
+<h2 id="三对：Java中“似曾相识”的事物"><a href="#三对：Java中“似曾相识”的事物" class="headerlink" title="三对：Java中“似曾相识”的事物"></a>三对：Java中“似曾相识”的事物</h2><p>Java 和 C&#x2F;C++同为编程语言，Java和C++更是像师兄弟，共享着许多似曾相识的语法。然而虽然共享了很多相似之处，但它们之间也有显著的不同，否则为什么不直接叫Java为C–呢？（当初设计时确实有这个想法，但咱就是要创造一个新的编程语言！所以当然会有不同之处！）这是异同点，有些是弥补了C&#x2F;C++的不足，有些又是它的特性，或好或坏，总归是属于Java的，也是独一无二的。</p>
+<h3 id="Familiar："><a href="#Familiar：" class="headerlink" title="Familiar："></a>Familiar：</h3><ol>
+<li><p><strong>基本语法相似</strong>：</p>
+<ul>
+<li>Java 和 C&#x2F;C++ 的基本语法非常相似，例如变量声明、循环（如 <code>for</code>, <code>while</code>）, 条件语句（如 <code>if</code>, <code>switch</code>）等。很多初学者会发现学习 Java 的语法相对容易，尤其如果有 C 或 C++ 的背景；相反过来，如果学习过Java之后再去学习这两个语言也会有比较好的学习感受。</li>
+<li>相同的控制结构：<code>if-else</code>, <code>for</code>, <code>while</code>, <code>do-while</code> 等控制流在这三者中几乎一致。</li>
+</ul>
+</li>
+<li><p><strong>面向对象编程</strong>：</p>
+<ul>
+<li>C++ 和 Java 都是面向对象编程（OOP）语言，支持类、对象、继承、多态等概念。<strong>尽管 C++ 支持多重继承而 Java 不支持</strong>，但二者都提供了强大的面向对象特性。</li>
+</ul>
+</li>
+<li><p><strong>数据类型</strong>：</p>
+<ul>
+<li>Java 和 C&#x2F;C++ 都有相似的基本数据类型，如 <code>int</code>, <code>float</code>, <code>double</code>, <code>char</code> 等。</li>
+</ul>
+</li>
+<li><p><strong>函数&#x2F;方法调用方式</strong>：</p>
+<ul>
+<li>三者都使用相似的函数调用机制，参数通过值传递，但 Java 不支持像 C++ 中的引用传递。</li>
+</ul>
+</li>
+</ol>
+<h3 id="Different："><a href="#Different：" class="headerlink" title="Different："></a>Different：</h3><ol>
+<li><p><strong>平台独立性</strong>：</p>
+<ul>
+<li>Java 最大的区别在于它的<strong>平台独立性</strong>。Java 程序通过编译生成字节码，然后由 <strong>JVM（Java 虚拟机）</strong>执行，因此它可以在不同操作系统上运行，这个特点使得它可以在各个平台如鱼得水，无需有过多的编译器桎梏。C 和 C++ 是<strong>编译型语言</strong>，生成的可执行文件依赖于具体的操作系统和硬件。</li>
+</ul>
+</li>
+<li><p><strong>内存管理</strong>：</p>
+<ul>
+<li>Java 使用<strong>自动内存管理</strong>（垃圾回收，Garbage Collection），开发者无需手动管理内存。而在 C 和 C++ 中，开发者需要手动管理内存的分配和释放（通过 <code>malloc/free</code> 在 C 中，或 <code>new/delete</code> 在 C++ 中）——这也是Java创立者当初就想要解决的C++诟病之一。这意味着在 Java 中，常见的内存泄漏和野指针问题较少见。</li>
+</ul>
+</li>
+<li><p><strong>指针</strong>：</p>
+<ul>
+<li>Java 中没有显式的<strong>指针</strong>概念，而 C 和 C++ 使用指针来直接操作内存。在 Java 中，所有对象都是通过引用传递的，引用本质上类似于指针，<strong>但开发者不能直接操纵它们的地址</strong>，这有时可以省很多事，但有时又可能是个缺点。</li>
+</ul>
+</li>
+<li><p><strong>多继承</strong>：</p>
+<ul>
+<li>C++ 支持<strong>多继承</strong>（一个类可以继承多个基类），但这可能会导致复杂的问题（如菱形继承问题）。Java 通过<strong>接口</strong>（interface）来提供类似多继承的功能，避免了多继承的复杂性。</li>
+</ul>
+</li>
+<li><p><strong>结构和联合</strong>：</p>
+<ul>
+<li>C 和 C++ 中有 <code>struct</code>（结构体）和 <code>union</code>（共用体），这些用于定义自定义的数据结构。而<strong>在 Java 中没有这类结构，所有数据类型都必须属于某个类。</strong>如果你想要将这两者理解为类似的概念，也不是不行。</li>
+</ul>
+</li>
+<li><p><strong>模板 vs 泛型</strong>：</p>
+<ul>
+<li>C++ 支持<strong>模板</strong>（templates），允许创建通用的函数和类。Java 引入了<strong>泛型</strong>（Generics），实现类似的功能，但其实现方式不同。Java 的泛型是通过<strong>类型擦除</strong>实现的，即在运行时，泛型信息被移除，而 C++ 的模板是在编译时展开的。</li>
+</ul>
+</li>
+<li><p><strong>指令和操作</strong>：</p>
+<ul>
+<li>Java 是一种完全的<strong>面向对象语言</strong>，所有的代码都必须写在类中，而 C++ 允许你写不属于任何类的全局函数和变量。C 中则没有面向对象的概念。</li>
+</ul>
+</li>
+<li><p><strong>异常处理</strong>：</p>
+<ul>
+<li>Java 有非常完善的<strong>异常处理机制</strong>，每个异常都是 <code>Throwable</code> 类的一个对象。C++ 也支持异常处理，但不像 Java 那样强制使用，C 则完全没有异常处理机制。</li>
+</ul>
+</li>
+<li><p><strong>编译与执行</strong>：</p>
+<ul>
+<li>C 和 C++ 代码通过编译器编译为机器码（与平台紧密相关），执行时无需依赖运行时环境。</li>
+<li>Java 则通过编译器先将代码编译为字节码，然后在 JVM 上运行，字节码与平台无关，依赖 JVM 的存在来解释执行。</li>
+<li>注：这一点同第一点来一起理解，可以看出JVM的使用有时也会导致产生一些问题。</li>
+</ul>
+</li>
+<li><p><strong>性能</strong>：</p>
+<ul>
+<li>C 和 C++ 由于直接编译为机器码，通常执行速度更快，而 Java 因为是通过 JVM 解释字节码执行，相对来说速度稍慢。但 Java 的现代 JVM 优化技术（如 JIT 编译）已经大大提高了其执行性能（但还是终究比不过硬件加速的C++）。</li>
+</ul>
+</li>
+</ol>
+<h3 id="Anyway："><a href="#Anyway：" class="headerlink" title="Anyway："></a>Anyway：</h3><p>抛开它们在实际应用上的异同点来看，Java 更注重安全性、稳定性和跨平台特性，而 C&#x2F;C++ 则更强调效率和灵活性，尤其在系统编程和底层开发中；所以说各有所长各有所需，编程语言始终只是代码编写者的工具，我们根据特定需求选择合适语言即可。</p>
+<h2 id="四望：Java专栏的规划"><a href="#四望：Java专栏的规划" class="headerlink" title="四望：Java专栏的规划"></a>四望：Java专栏的规划</h2><p>毫无疑问，专栏的第一篇将会是“如何使用Java写出第一个”Hello World”？”在编程语言学习中，打印可谓是必不可少的初学操作，同时在了解如何打印的同时，你也会对语言的大致语法结构和组成部分有一定的了解。</p>
+<p>而后由于笔者学校开展了Java课程，大概率会按照课程的基本设计顺序来进行更新——这只是指顺序，毕竟由浅入深，教材基本是不会出错的；而对于重点、要点、注意以及其他一部分，我会进行规划并在后续的专栏中体现出来。</p>
+<p>同时，我会根据Java知识中的多个小知识点进行分类汇总以及分类讲解，从而达到最好的理解效果。</p>
+<p>我认为，这个专栏不只是自己笔记的总结和理解，更是对想要了解Java的人的一个初学的宝典——因为我也是初学者。</p>
+<p>本专栏参考资料过多，所涉及的资料和代码都会上传至：<a target="_blank" rel="noopener" href="https://github.com/Skrrapper/Javaroastery">Javaroastery</a>，读者们有兴趣的可以去查看，觉得有用的还希望可以<strong>star</strong>一下，感谢各位好homie们的支持！</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【Java】Chapter 0——进入Java的世界</div>
+      <div>https://skrrapper.github.io/2024/12/18/Chapter 0.进入Java的世界/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Joolin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年12月18日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/12/18/post/" title="post">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">post</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/12/14/hello-world/" title="Hello World">
+                        <span class="hidden-mobile">Hello World</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"IwoxGGOxuWIRyCWHqXHYHBws-gzGzoHsz","appKey":"VSufRvKEGNSLiusV4BYrkCxE","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://iwoxggox.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
