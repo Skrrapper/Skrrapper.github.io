@@ -1,0 +1,895 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/joolin.png">
+  <link rel="icon" href="/img/joolin.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Joolin">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="配置xv6环境参考这篇文章即可：环境配置  对于xv6的使用，更推荐用VSCode等文本编辑器进行启动，毕竟面对着命令提示符，还是太过寒酸了。  每次实验完成之后需要进行提交和测试，并且要新创一个time.txt文件告知完成时间。  每次创建文件会需要在Makefile中指定文件的编译顺序。即一般进行以下操作 $U&#x2F;_操作名\  可以通过github进行提交。  注意：代码中的注释往往包含重要信息">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【6S081】Lab Note1">
+<meta property="og:url" content="https://skrrapper.github.io/2025/03/09/%E3%80%906S081%E3%80%91%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B01/index.html">
+<meta property="og:site_name" content="Joolin">
+<meta property="og:description" content="配置xv6环境参考这篇文章即可：环境配置  对于xv6的使用，更推荐用VSCode等文本编辑器进行启动，毕竟面对着命令提示符，还是太过寒酸了。  每次实验完成之后需要进行提交和测试，并且要新创一个time.txt文件告知完成时间。  每次创建文件会需要在Makefile中指定文件的编译顺序。即一般进行以下操作 $U&#x2F;_操作名\  可以通过github进行提交。  注意：代码中的注释往往包含重要信息">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20250307112729855.png">
+<meta property="og:image" content="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20250307134746296.png">
+<meta property="og:image" content="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20250308011848902.png">
+<meta property="article:published_time" content="2025-03-09T15:50:07.000Z">
+<meta property="article:modified_time" content="2025-03-09T15:51:08.415Z">
+<meta property="article:author" content="Joolin">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20250307112729855.png">
+  
+  
+  
+  <title>【6S081】Lab Note1 - Joolin</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"skrrapper.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":100,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Joolin</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">【6S081】Lab Note1</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-03-09 23:50" pubdate>
+          2025年3月9日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          58 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">【6S081】Lab Note1</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="配置xv6环境"><a href="#配置xv6环境" class="headerlink" title="配置xv6环境"></a>配置xv6环境</h1><p>参考这篇文章即可：<a target="_blank" rel="noopener" href="https://blog.csdn.net/John_Snowww/article/details/129972288">环境配置</a></p>
+<ul>
+<li><p>对于xv6的使用，更推荐用VSCode等文本编辑器进行启动，毕竟面对着命令提示符，还是太过寒酸了。</p>
+</li>
+<li><p>每次实验完成之后需要进行提交和测试，并且要新创一个<code>time.txt</code>文件告知完成时间。</p>
+</li>
+<li><p>每次创建文件会需要在Makefile中指定文件的编译顺序。即一般进行以下操作</p>
+<p><code>$U/_操作名\</code></p>
+</li>
+<li><p>可以通过github进行提交。</p>
+</li>
+<li><p>注意：代码中的注释往往包含重要信息，务必要仔细查看</p>
+</li>
+</ul>
+<h1 id="实验1-sleep-难度：Easy"><a href="#实验1-sleep-难度：Easy" class="headerlink" title="实验1 sleep(难度：Easy)"></a>实验1 sleep(难度：Easy)</h1><h2 id="实验要求"><a href="#实验要求" class="headerlink" title="实验要求"></a>实验要求</h2><blockquote>
+<p><strong>实现xv6的UNIX程序</strong><code>sleep</code><strong>：您的</strong><code>sleep</code><strong>应该暂停到用户指定的计时数。一个滴答(tick)是由xv6内核定义的时间概念，即来自定时器芯片的两个中断之间的时间。您的解决方案应该在文件<code>\user/sleep.c\</code>中</strong></p>
+</blockquote>
+<h2 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h2><ul>
+<li>在你开始编码之前，请阅读《book-riscv-rev1》的第一章</li>
+<li>看看其他的一些程序（如***&#x2F;user&#x2F;echo.c, &#x2F;user&#x2F;grep.c, &#x2F;user&#x2F;rm.c***）查看如何获取传递给程序的命令行参数</li>
+<li>如果用户忘记传递参数，<code>sleep</code>应该打印一条错误信息</li>
+<li>命令行参数作为字符串传递; 您可以使用<code>atoi</code>将其转换为数字（详见***&#x2F;user&#x2F;ulib.c***）</li>
+<li>使用系统调用<code>sleep</code></li>
+<li>请参阅*<strong>kernel&#x2F;sysproc.c*<strong>以获取实现<code>sleep</code>系统调用的xv6内核代码（查找<code>sys_sleep</code>），</strong>*user&#x2F;user.h**<em>提供了<code>sleep</code>的声明以便其他程序调用，用汇编程序编写的</em></strong>user&#x2F;usys.S***可以帮助<code>sleep</code>从用户区跳转到内核区。</li>
+<li>确保<code>main</code>函数调用<code>exit()</code>以退出程序。</li>
+<li>将你的<code>sleep</code>程序添加到***Makefile***中的<code>UPROGS</code>中；完成之后，<code>make qemu</code>将编译您的程序，并且您可以从xv6的shell运行它。</li>
+<li>看看Kernighan和Ritchie编著的《C程序设计语言》（第二版）来了解C语言。</li>
+</ul>
+<h2 id="实验思路"><a href="#实验思路" class="headerlink" title="实验思路"></a>实验思路</h2><p>这题很简单，要求我们实现一个sleep函数来进行休眠操作。</p>
+<p>我们看要求中，让我们去看user中的调用参数示例，这也是我们后续使用的很多的一个范式。</p>
+<p>我们去看看<code>echo.c</code></p>
+<p><img src="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20250307112729855.png" srcset="/img/loading.gif" lazyload alt="image-20250307112729855"></p>
+<p>可以看到，这个主函数中调用了两个参数，<code>argc</code>和<code>*argv[]</code>，一个是命令行参数的数量，一个是用来接收命令行参数的数组。</p>
+<p>我们回到<code>sleep.c</code>中，知道了该如何接受命令行参数，也就知道了如何写它的框架。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;kernel/types.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;user/user.h&gt;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc,<span class="hljs-type">char</span>** argv)</span><br>&#123;<br>   <span class="hljs-keyword">if</span>(argc!=<span class="hljs-number">2</span>)<span class="hljs-comment">//这里指的是在命令行中输出时要用到的参数，我们这里要输出sleep 10（也就是休眠10个时间单位），所以也就有两个参数。</span><br>   &#123;<br>       <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Error Example:sleep 2\n&quot;</span>);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">-1</span>);<br>   &#125;<br>   ...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>然后我们再参考sleep要求我们输入的参数，它是一个<code>int</code>类型的参数，是用来表示休眠的时间。</p>
+<p>那么我们如果需要接受一个<code>int</code>类型的参数来休眠指定时间，也就需要将命令行参数转类型成整数类型。这里使用到了<code>atoi</code></p>
+<p>在<code>ulib.c</code>中可以找到</p>
+<p><img src="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20250307134746296.png" srcset="/img/loading.gif" lazyload alt="image-20250307134746296"></p>
+<p>我们照葫芦画瓢。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> num_of_tick = atoi(argv[<span class="hljs-number">1</span>]);<span class="hljs-comment">//这里argv[1]是指的int具体是多少，用一个变量来读取。</span><br><span class="hljs-keyword">if</span>(sleep(num_of_tick) &lt; <span class="hljs-number">0</span>)<br>&#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Can not sleep\n&quot;</span>);<br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">-1</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>到此，一个简单的sleep程序就实现完成了。实际上我们并不需要去写sleep的实现过程，因为我们只需要直接调用即可。<strong>我们要做的重要的事情是：在命令行中实现该函数的调用。</strong></p>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;kernel/types.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;user/user.h&gt;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc,<span class="hljs-type">char</span>** argv)</span><br>&#123;<br>    <span class="hljs-keyword">if</span>(argc!=<span class="hljs-number">2</span>)<span class="hljs-comment">//两个参数，一个是程序名，一个是参数，这里是sleep int</span><br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Error Example:sleep 2\n&quot;</span>);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">-1</span>);<br>    &#125;<br><br>    <span class="hljs-comment">//sleep系统调用函数在在user.h中被定义，但深层是通过汇编语言绑定到sys_sleep函数上的</span><br>    <span class="hljs-type">int</span> num_of_tick = atoi(argv[<span class="hljs-number">1</span>]);<br>    <span class="hljs-keyword">if</span>(sleep(num_of_tick)&lt;<span class="hljs-number">0</span>)<br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Can not sleep\n&quot;</span>);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">-1</span>);<br>    &#125;<br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="实验2-pingpong（难度：Easy）"><a href="#实验2-pingpong（难度：Easy）" class="headerlink" title="实验2 pingpong（难度：Easy）"></a>实验2 pingpong（难度：Easy）</h1><h2 id="实验要求-1"><a href="#实验要求-1" class="headerlink" title="实验要求"></a>实验要求</h2><blockquote>
+<p><strong>编写一个使用UNIX系统调用的程序来在两个进程之间“ping-pong”一个字节，请使用两个管道，每个方向一个。父进程应该向子进程发送一个字节;子进程应该打印“<code>&lt;pid&gt;: received ping</code>”，其中<code>&lt;pid&gt;</code>是进程ID，并在管道中写入字节发送给父进程，然后退出;父级应该从读取从子进程而来的字节，打印“<code>&lt;pid&gt;: received pong</code>”，然后退出。您的解决方案应该在文件*user&#x2F;pingpong.c*中。</strong></p>
+</blockquote>
+<h2 id="提示-1"><a href="#提示-1" class="headerlink" title="提示"></a><strong>提示</strong></h2><ul>
+<li>使用<code>pipe</code>来创造管道</li>
+<li>使用<code>fork</code>创建子进程</li>
+<li>使用<code>read</code>从管道中读取数据，并且使用<code>write</code>向管道中写入数据</li>
+<li>使用<code>getpid</code>获取调用进程的pid</li>
+<li>将程序加入到***Makefile***的<code>UPROGS</code></li>
+<li>xv6上的用户程序有一组有限的可用库函数。您可以在<em><strong>user&#x2F;user.h*<strong>中看到可调用的程序列表；源代码（系统调用除外）位于</strong>*user&#x2F;ulib.c**<em>、</em></strong>user&#x2F;printf.c*<strong>和</strong></em>user&#x2F;umalloc.c*中。</li>
+</ul>
+<h2 id="实验思路-1"><a href="#实验思路-1" class="headerlink" title="实验思路"></a>实验思路</h2><p>我们看提示，使用<code>pipe</code>来创造管道的目的是什么呢？因为这是作为父进程与子进程之间进行传输的方式。我们的实验目的是<strong>实现子父进程之间的字符串传递</strong>，那么就可以这样去想：通过两个管道实现了父进程和子进程之间的简单通信。父进程向子进程发送 “ping” 消息，子进程接收到后打印消息并向父进程发送 “pong” 消息，父进程接收到后打印消息。</p>
+<p>所以说我们创建两个pipe，每个pipe都有两个文件描述符，一个用于读一个用于写。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> p1[<span class="hljs-number">2</span>], p2[<span class="hljs-number">2</span>];<br>pipe(p1), pipe(p2);<br></code></pre></td></tr></table></figure>
+
+<p>我们知道了文件描述符0、1、2分别表示什么意思之后，这里就好理解了。</p>
+<ol>
+<li><strong>标准输入（stdin）</strong>：文件描述符为 <code>0</code>，用于从键盘或其他输入设备读取数据。</li>
+<li><strong>标准输出（stdout）</strong>：文件描述符为 <code>1</code>，用于向屏幕或其他输出设备写入数据。</li>
+<li><strong>标准错误（stderr）</strong>：文件描述符为 <code>2</code>，用于向屏幕或其他输出设备写入错误信息。</li>
+</ol>
+<p>好，我们知道了这些含义，那么后续就可以使用它们来进行读写操作。</p>
+<p>其次，我们需要建立一个缓冲区来进行数据的缓存，保存从管道读取的信息，相当于子进程和父进程之间的一个“中介”。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">char</span> buf[<span class="hljs-number">5</span>]; <span class="hljs-comment">// 用于保存从管道读取的信息</span><br><span class="hljs-type">int</span> size; <span class="hljs-comment">//用于保存读取的字节数</span><br></code></pre></td></tr></table></figure>
+
+<p>好，一切前置准备就绪后，我们来创建子进程和父进程。</p>
+<p>在创建前，我们需要知道<code>pid</code> 用于区分父进程和子进程，并根据不同的返回值执行相应的代码逻辑。</p>
+<p>并且我们根据实验要求，来理解子进程和父进程分别要做些什么。</p>
+<p>在子进程中：</p>
+<ul>
+<li>关闭管道 <code>p1</code> 的写端。</li>
+<li>从管道 <code>p1</code> 的读端读取数据，并打印接收到的信息。</li>
+<li>关闭管道 <code>p2</code> 的读端。</li>
+<li>向管道 <code>p2</code> 的写端写入 “pong\n”。</li>
+<li>退出子进程。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> pid = fork();<span class="hljs-comment">//pid用于判断创建的进程</span><br><span class="hljs-comment">//如果pid==0，那么说明是创建的子进程</span><br><span class="hljs-keyword">if</span> (pid == <span class="hljs-number">0</span>) &#123;<br>    <span class="hljs-comment">// 子进程执行的代码</span><br>    close(p1[<span class="hljs-number">1</span>]); <span class="hljs-comment">// 关闭管道1的写端</span><br>    <span class="hljs-keyword">if</span> ((size = read(p1[<span class="hljs-number">0</span>], buf, <span class="hljs-keyword">sizeof</span> buf)) &gt; <span class="hljs-number">0</span>) &#123; <span class="hljs-comment">// 从管道1读取数据</span><br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d: received &quot;</span>, getpid());<br>        write(<span class="hljs-number">1</span>, buf, size);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d: receive failed\n&quot;</span>, getpid());<br>    &#125;<br>    close(p2[<span class="hljs-number">0</span>]); <span class="hljs-comment">// 关闭管道2的读端</span><br>    write(p2[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;pong\n&quot;</span>, <span class="hljs-number">5</span>); <span class="hljs-comment">// 向管道2写数据</span><br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在父进程中：</p>
+<ul>
+<li>关闭管道 <code>p1</code> 的读端。</li>
+<li>向管道 <code>p1</code> 的写端写入 “ping\n”。</li>
+<li>等待子进程结束。</li>
+<li>关闭管道 <code>p2</code> 的写端。</li>
+<li>从管道 <code>p2</code> 的读端读取数据，并打印接收到的信息。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//如果返回的是子进程的进程ID，那么说明创建的是父进程</span><br><span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (pid &gt; <span class="hljs-number">0</span>) &#123;<br>    <span class="hljs-comment">// 父进程执行的代码</span><br>    close(p1[<span class="hljs-number">0</span>]); <span class="hljs-comment">// 关闭管道1的读端</span><br>    write(p1[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;ping\n&quot;</span>, <span class="hljs-number">5</span>); <span class="hljs-comment">// 向管道1写数据</span><br><br>    wait(<span class="hljs-number">0</span>); <span class="hljs-comment">// 等待子进程结束</span><br>    close(p2[<span class="hljs-number">1</span>]); <span class="hljs-comment">// 关闭管道2的写端</span><br>    <span class="hljs-keyword">if</span> ((size = read(p2[<span class="hljs-number">0</span>], buf, <span class="hljs-keyword">sizeof</span> buf)) &gt; <span class="hljs-number">0</span>) &#123; <span class="hljs-comment">// 从管道2读取数据</span><br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d: received &quot;</span>, getpid());<br>        write(<span class="hljs-number">1</span>, buf, size);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d: receive failed\n&quot;</span>, getpid());<br>    &#125;<br>&#125;<br><span class="hljs-comment">//错误处理</span><br><span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;fork error\n&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>注意：我们发现在主要代码的前后，通常都会有<code>close</code>操作，也就是关闭管道的读端或者写端。其实这里的作用是防止管道进入或者出去什么“奇怪的东西”，避免了意外的读写操作，从而产生资源泄露。</p>
+<h2 id="完整代码-1"><a href="#完整代码-1" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// user/pingpong.c</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/types.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/stat.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;user/user.h&quot;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span> &#123;<br>    <span class="hljs-type">int</span> p1[<span class="hljs-number">2</span>], p2[<span class="hljs-number">2</span>];<br>    pipe(p1), pipe(p2);<br>    <span class="hljs-type">char</span> buf[<span class="hljs-number">5</span>]; <span class="hljs-comment">// 用于保存从管道读取的信息</span><br>    <span class="hljs-type">int</span> size;<br>    <span class="hljs-type">int</span> pid = fork();<br>    <span class="hljs-keyword">if</span> (pid == <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-comment">//读取父进程传过来的信息</span><br>        close(p1[<span class="hljs-number">1</span>]); <span class="hljs-comment">// 关闭管道1的写端</span><br>        <span class="hljs-keyword">if</span> ((size = read(p1[<span class="hljs-number">0</span>], buf, <span class="hljs-keyword">sizeof</span> buf)) &gt; <span class="hljs-number">0</span>) &#123; <span class="hljs-comment">// 从管道1读取不大于buf个字节的数据到buf</span><br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d: received &quot;</span>, getpid());<br>            write(<span class="hljs-number">1</span>, buf, size);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d: receive failed\n&quot;</span>, getpid());<br>        &#125;<br>        <span class="hljs-comment">//向父进程写信息</span><br>        close(p2[<span class="hljs-number">0</span>]); <span class="hljs-comment">// 关闭管道2的读端</span><br>        write(p2[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;pong\n&quot;</span>, <span class="hljs-number">5</span>); <span class="hljs-comment">// 向管道2写从“pong\n&quot;开始的不大于5个字节的数据</span><br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (pid &gt; <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-comment">//向子进程写信息</span><br>        close(p1[<span class="hljs-number">0</span>]);<br>        write(p1[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;ping\n&quot;</span>, <span class="hljs-number">5</span>);<br><br>        wait(<span class="hljs-number">0</span>);<br>		<span class="hljs-comment">//读取子进程传过来的信息</span><br>        close(p2[<span class="hljs-number">1</span>]);<br>        <span class="hljs-keyword">if</span> ((size = read(p2[<span class="hljs-number">0</span>], buf, <span class="hljs-keyword">sizeof</span> buf)) &gt; <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d: received &quot;</span>, getpid());<br>            write(<span class="hljs-number">1</span>, buf, size);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d: receive failed\n&quot;</span>, getpid());<br>        &#125;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;fork error\n&quot;</span>);<br>    &#125;<br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="实验3-primes（难度：Moderate）"><a href="#实验3-primes（难度：Moderate）" class="headerlink" title="实验3 primes（难度：Moderate）"></a>实验3 primes（难度：Moderate）</h1><h2 id="实验要求-2"><a href="#实验要求-2" class="headerlink" title="实验要求"></a>实验要求</h2><blockquote>
+<p><strong>使用管道编写</strong><code>prime sieve</code><strong>(筛选素数)的并发版本。这个想法是由Unix管道的发明者Doug McIlroy提出的。请查看<a target="_blank" rel="noopener" href="http://swtch.com/~rsc/thread/">这个网站</a>(翻译在下面)，该网页中间的图片和周围的文字解释了如何做到这一点。您的解决方案应该在*user&#x2F;primes.c*文件中。</strong></p>
+<p>您的目标是使用<code>pipe</code>和<code>fork</code>来设置管道。第一个进程将数字2到35输入管道。对于每个素数，您将安排创建一个进程，该进程通过一个管道从其左邻居读取数据，并通过另一个管道向其右邻居写入数据。由于xv6的文件描述符和进程数量有限，因此第一个进程可以在35处停止。</p>
+</blockquote>
+<h2 id="提示-2"><a href="#提示-2" class="headerlink" title="提示"></a>提示</h2><ul>
+<li>仔细关闭进程不需要的文件描述符，否则您的程序将在第一个进程达到35之前就会导致xv6系统资源不足。</li>
+<li>一旦第一个进程达到35，它应该使用<code>wait</code>等待整个管道终止，包括所有子孙进程等等。因此，主<code>primes</code>进程应该只在打印完所有输出之后，并且在所有其他<code>primes</code>进程退出之后退出。</li>
+<li>提示：当管道的<code>write</code>端关闭时，<code>read</code>返回零。</li>
+<li>最简单的方法是直接将32位（4字节）int写入管道，而不是使用格式化的ASCII I&#x2F;O。</li>
+<li>您应该仅在需要时在管线中创建进程。</li>
+<li>将程序添加到***Makefile***中的<code>UPROGS</code></li>
+</ul>
+<h2 id="实验思路-2"><a href="#实验思路-2" class="headerlink" title="实验思路"></a>实验思路</h2><p>首先我们看提示中，需要注意的第一点：要及时关闭不需要的文件描述符，也就与pingpong中管道读写的关闭类似，及时解除引用。</p>
+<p>其次，我们需要定义一个最大常量，保证在超过这个常量时，应该调用<code>wait</code>直到管道中止。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> SIZE 34</span><br></code></pre></td></tr></table></figure>
+
+<p>接下来，我们就进行程序的分析：如果我们需要进行筛选操作，筛选出1-34中所有的素数，那么我们可以如何进行思考呢？没错，使用递归就可以实现。</p>
+<p>好，那我们直接递归函数<code>recur</code>，进行该函数的编写即可。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//recur函数的功能：递归调用，找出质数（筛选）</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">recur</span><span class="hljs-params">(<span class="hljs-type">int</span> p[<span class="hljs-number">2</span>])</span><br>&#123;<br>    <span class="hljs-type">int</span> primes, nums;<br>    <span class="hljs-type">int</span> p1[<span class="hljs-number">2</span>];<br><br>    close(<span class="hljs-number">0</span>);    <span class="hljs-comment">// 关闭标准输入</span><br>    dup(p[<span class="hljs-number">0</span>]);   <span class="hljs-comment">// 复制管道的读端到标准输入</span><br>    close(p[<span class="hljs-number">0</span>]); <span class="hljs-comment">// 关闭管道的读端</span><br>    close(p[<span class="hljs-number">1</span>]); <span class="hljs-comment">// 关闭管道的写端</span><br><br>    <span class="hljs-keyword">if</span> (read(<span class="hljs-number">0</span>, &amp;primes, <span class="hljs-number">4</span>))<br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;prime %d\n&quot;</span>, primes); <span class="hljs-comment">// 打印由父进程传来的第一个质数</span><br><br>        pipe(p1); <span class="hljs-comment">// 创建新的管道</span><br><br>        <span class="hljs-keyword">if</span> (fork() == <span class="hljs-number">0</span>)<span class="hljs-comment">//创建子进程</span><br>        &#123;<br>            recur(p1); <span class="hljs-comment">// 递归调用</span><br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            <span class="hljs-keyword">while</span>(read(<span class="hljs-number">0</span>, &amp;nums, <span class="hljs-number">4</span>))<br>            &#123;<br>                <span class="hljs-keyword">if</span>(nums % primes != <span class="hljs-number">0</span>)<span class="hljs-comment">//将符合条件的数字传给子进程</span><br>                &#123;<br>                    write(p1[<span class="hljs-number">1</span>], &amp;nums, <span class="hljs-number">4</span>); <span class="hljs-comment">// 将不是primes的倍数的数写入管道</span><br>                &#125;<br>            &#125;<br>            close(p1[<span class="hljs-number">1</span>]);<span class="hljs-comment">//关闭写端</span><br>            close(<span class="hljs-number">0</span>);<span class="hljs-comment">//关闭标准输入</span><br>            wait(<span class="hljs-number">0</span>);<span class="hljs-comment">//等待子进程结束</span><br>        &#125;<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        close(<span class="hljs-number">0</span>);<br>    &#125;<br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>然后将其与主函数结合即可。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-type">int</span> p[<span class="hljs-number">2</span>];<br>    pipe(p);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">2</span>; i &lt;= SIZE; i++)<br>    &#123;<br>        write(p[<span class="hljs-number">1</span>], &amp;i, <span class="hljs-number">4</span>); <span class="hljs-comment">// 将 2 到 SIZE (34) 写入管道</span><br>    &#125;<br>    <span class="hljs-keyword">if</span> (fork() == <span class="hljs-number">0</span>) <span class="hljs-comment">// 创建子进程</span><br>    &#123;<br>        recur(p);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        close(p[<span class="hljs-number">1</span>]);<br>        wait(<span class="hljs-number">0</span>);<br>    &#125;<br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这里的递归函数的妙处就在于：</p>
+<p>它利用管道和递归调用来实现质数筛选算法。每一层递归创建一个新的管道，用于传递筛选后的数。</p>
+<p>主进程将 2 到 <code>SIZE</code> 的数写入管道，子进程通过递归调用 <code>recur</code> 函数筛选出质数，并将不是当前质数倍数的数传递给下一个子进程。每个子进程负责筛选一个质数，并将结果打印出来。</p>
+<h2 id="完整代码-2"><a href="#完整代码-2" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/types.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/stat.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;user/user.h&quot;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> SIZE 34</span><br><br><span class="hljs-comment">//recur函数的功能：递归调用，找出质数（筛选）</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">recur</span><span class="hljs-params">(<span class="hljs-type">int</span> p[<span class="hljs-number">2</span>])</span><br>&#123;<br>    <span class="hljs-type">int</span> primes, nums;<br>    <span class="hljs-type">int</span> p1[<span class="hljs-number">2</span>];<br><br>    close(<span class="hljs-number">0</span>);    <span class="hljs-comment">// 关闭标准输入</span><br>    dup(p[<span class="hljs-number">0</span>]);   <span class="hljs-comment">// 复制管道的读端到标准输入</span><br>    close(p[<span class="hljs-number">0</span>]); <span class="hljs-comment">// 关闭管道的读端</span><br>    close(p[<span class="hljs-number">1</span>]); <span class="hljs-comment">// 关闭管道的写端</span><br><br>    <span class="hljs-keyword">if</span> (read(<span class="hljs-number">0</span>, &amp;primes, <span class="hljs-number">4</span>))<br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;prime %d\n&quot;</span>, primes); <span class="hljs-comment">// 打印由父进程传来的第一个质数</span><br><br>        pipe(p1); <span class="hljs-comment">// 创建新的管道</span><br><br>        <span class="hljs-keyword">if</span> (fork() == <span class="hljs-number">0</span>)<span class="hljs-comment">//创建子进程</span><br>        &#123;<br>            recur(p1); <span class="hljs-comment">// 递归调用</span><br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            <span class="hljs-keyword">while</span>(read(<span class="hljs-number">0</span>, &amp;nums, <span class="hljs-number">4</span>))<br>            &#123;<br>                <span class="hljs-keyword">if</span>(nums % primes != <span class="hljs-number">0</span>)<span class="hljs-comment">//将符合条件的数字传给子进程</span><br>                &#123;<br>                    write(p1[<span class="hljs-number">1</span>], &amp;nums, <span class="hljs-number">4</span>); <span class="hljs-comment">// 将不是primes的倍数的数写入管道</span><br>                &#125;<br>            &#125;<br>            close(p1[<span class="hljs-number">1</span>]);<span class="hljs-comment">//关闭写端</span><br>            close(<span class="hljs-number">0</span>);<span class="hljs-comment">//关闭标准输入</span><br>            wait(<span class="hljs-number">0</span>);<span class="hljs-comment">//等待子进程结束</span><br>        &#125;<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        close(<span class="hljs-number">0</span>);<br>    &#125;<br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-type">int</span> p[<span class="hljs-number">2</span>];<br>    pipe(p);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">2</span>; i &lt;= SIZE; i++)<br>    &#123;<br>        write(p[<span class="hljs-number">1</span>], &amp;i, <span class="hljs-number">4</span>); <span class="hljs-comment">// 将2到SIZE(34)写入管道</span><br>    &#125;<br>    <span class="hljs-keyword">if</span>(fork()==<span class="hljs-number">0</span>)<span class="hljs-comment">//创建子进程</span><br>    &#123;<br>        recur(p);<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        close(p[<span class="hljs-number">1</span>]);<br>        wait(<span class="hljs-number">0</span>);<br>    &#125;<br><span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="实验4-find（难度：Moderate）"><a href="#实验4-find（难度：Moderate）" class="headerlink" title="实验4 find（难度：Moderate）"></a>实验4 find（难度：Moderate）</h1><h2 id="实验要求-3"><a href="#实验要求-3" class="headerlink" title="实验要求"></a>实验要求</h2><blockquote>
+<p><strong>写一个简化版本的UNIX的<code>find</code>程序：查找目录树中具有特定名称的所有文件，你的解决方案应该放在*user&#x2F;find.c*</strong></p>
+</blockquote>
+<h2 id="提示-3"><a href="#提示-3" class="headerlink" title="提示"></a>提示</h2><ul>
+<li>查看***user&#x2F;ls.c***文件学习如何读取目录</li>
+<li>使用递归允许<code>find</code>下降到子目录中</li>
+<li>不要在“<code>.</code>”和“<code>..</code>”目录中递归</li>
+<li>对文件系统的更改会在qemu的运行过程中一直保持；要获得一个干净的文件系统，请运行<code>make clean</code>，然后<code>make qemu</code></li>
+<li>你将会使用到C语言的字符串，要学习它请看《C程序设计语言》（K&amp;R）,例如第5.5节</li>
+<li>注意在C语言中不能像python一样使用“<code>==</code>”对字符串进行比较，而应当使用<code>strcmp()</code></li>
+<li>将程序加入到Makefile的<code>UPROGS</code></li>
+</ul>
+<h2 id="实验思路-3"><a href="#实验思路-3" class="headerlink" title="实验思路"></a>实验思路</h2><p>提示中要我们看ls.c，我们照做：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/types.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/stat.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;user/user.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/fs.h&quot;</span></span><br><br><span class="hljs-type">char</span>*<br><span class="hljs-title function_">fmtname</span><span class="hljs-params">(<span class="hljs-type">char</span> *path)</span><br>&#123;<br>  <span class="hljs-type">static</span> <span class="hljs-type">char</span> buf[DIRSIZ+<span class="hljs-number">1</span>];<br>  <span class="hljs-type">char</span> *p;<br><br>  <span class="hljs-comment">// Find first character after last slash.</span><br>  <span class="hljs-keyword">for</span>(p=path+<span class="hljs-built_in">strlen</span>(path); p &gt;= path &amp;&amp; *p != <span class="hljs-string">&#x27;/&#x27;</span>; p--)<br>    ;<br>  p++;<br><br>  <span class="hljs-comment">// Return blank-padded name.</span><br>  <span class="hljs-keyword">if</span>(<span class="hljs-built_in">strlen</span>(p) &gt;= DIRSIZ)<br>    <span class="hljs-keyword">return</span> p;<br>  memmove(buf, p, <span class="hljs-built_in">strlen</span>(p));<br>  <span class="hljs-built_in">memset</span>(buf+<span class="hljs-built_in">strlen</span>(p), <span class="hljs-string">&#x27; &#x27;</span>, DIRSIZ-<span class="hljs-built_in">strlen</span>(p));<br>  <span class="hljs-keyword">return</span> buf;<br>&#125;<br><br><span class="hljs-type">void</span><br><span class="hljs-title function_">ls</span><span class="hljs-params">(<span class="hljs-type">char</span> *path)</span><br>&#123;<br>  <span class="hljs-type">char</span> buf[<span class="hljs-number">512</span>], *p;<br>  <span class="hljs-type">int</span> fd;<br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">dirent</span> <span class="hljs-title">de</span>;</span><span class="hljs-comment">//目录项</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">stat</span> <span class="hljs-title">st</span>;</span><span class="hljs-comment">//文件属性</span><br><br>  <span class="hljs-keyword">if</span>((fd = open(path, <span class="hljs-number">0</span>)) &lt; <span class="hljs-number">0</span>)&#123;<span class="hljs-comment">//如果文件描述符&lt;0，说明打开文件失败</span><br>    <span class="hljs-built_in">fprintf</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;ls: cannot open %s\n&quot;</span>, path);<br>    <span class="hljs-keyword">return</span>;<br>  &#125;<br><br>  <span class="hljs-keyword">if</span>(fstat(fd, &amp;st) &lt; <span class="hljs-number">0</span>)&#123;<br>    <span class="hljs-built_in">fprintf</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;ls: cannot stat %s\n&quot;</span>, path);<br>    close(fd);<br>    <span class="hljs-keyword">return</span>;<br>  &#125;<br><br>  <span class="hljs-keyword">switch</span>(st.type)&#123;<br>  <span class="hljs-keyword">case</span> T_FILE:<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s %d %d %l\n&quot;</span>, fmtname(path), st.type, st.ino, st.size);<br>    <span class="hljs-keyword">break</span>;<br><br>  <span class="hljs-keyword">case</span> T_DIR:<br>    <span class="hljs-keyword">if</span>(<span class="hljs-built_in">strlen</span>(path) + <span class="hljs-number">1</span> + DIRSIZ + <span class="hljs-number">1</span> &gt; <span class="hljs-keyword">sizeof</span> buf)&#123;<br>      <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;ls: path too long\n&quot;</span>);<br>      <span class="hljs-keyword">break</span>;<br>    &#125;<br>    <span class="hljs-built_in">strcpy</span>(buf, path);<br>    p = buf+<span class="hljs-built_in">strlen</span>(buf);<br>    *p++ = <span class="hljs-string">&#x27;/&#x27;</span>;<br>    <span class="hljs-keyword">while</span>(read(fd, &amp;de, <span class="hljs-keyword">sizeof</span>(de)) == <span class="hljs-keyword">sizeof</span>(de))&#123;<br>      <span class="hljs-keyword">if</span>(de.inum == <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">continue</span>;<br>      memmove(p, de.name, DIRSIZ);<br>      p[DIRSIZ] = <span class="hljs-number">0</span>;<br>      <span class="hljs-keyword">if</span>(stat(buf, &amp;st) &lt; <span class="hljs-number">0</span>)&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;ls: cannot stat %s\n&quot;</span>, buf);<br>        <span class="hljs-keyword">continue</span>;<br>      &#125;<br>      <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s %d %d %d\n&quot;</span>, fmtname(buf), st.type, st.ino, st.size);<br>    &#125;<br>    <span class="hljs-keyword">break</span>;<br>  &#125;<br>  close(fd);<br>&#125;<br><br><span class="hljs-type">int</span><br><span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span><br>&#123;<br>  <span class="hljs-type">int</span> i;<br><br>  <span class="hljs-keyword">if</span>(argc &lt; <span class="hljs-number">2</span>)&#123;<br>    ls(<span class="hljs-string">&quot;.&quot;</span>);<br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>  &#125;<br>  <span class="hljs-keyword">for</span>(i=<span class="hljs-number">1</span>; i&lt;argc; i++)<br>    ls(argv[i]);<br>  <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>我们逐帧分析：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">char</span>* <span class="hljs-title function_">fmtname</span><span class="hljs-params">(<span class="hljs-type">char</span> *path)</span><br>&#123;<br>  <span class="hljs-type">static</span> <span class="hljs-type">char</span> buf[DIRSIZ+<span class="hljs-number">1</span>];<br>  <span class="hljs-type">char</span> *p;<br><br>  <span class="hljs-comment">// Find first character after last slash.</span><br>  <span class="hljs-keyword">for</span>(p=path+<span class="hljs-built_in">strlen</span>(path); p &gt;= path &amp;&amp; *p != <span class="hljs-string">&#x27;/&#x27;</span>; p--)<br>    ;<br>  p++;<br><br>  <span class="hljs-comment">// Return blank-padded name.</span><br>  <span class="hljs-keyword">if</span>(<span class="hljs-built_in">strlen</span>(p) &gt;= DIRSIZ)<br>    <span class="hljs-keyword">return</span> p;<br>  memmove(buf, p, <span class="hljs-built_in">strlen</span>(p));<br>  <span class="hljs-built_in">memset</span>(buf+<span class="hljs-built_in">strlen</span>(p), <span class="hljs-string">&#x27; &#x27;</span>, DIRSIZ-<span class="hljs-built_in">strlen</span>(p));<br>  <span class="hljs-keyword">return</span> buf;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这部分用来干什么呢？答案是格式化文件名。这个函数用于找到路径中最后一个斜杠的部分，也就是“最里面”。最后返回使用空格填充的文件名。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">ls</span><span class="hljs-params">(<span class="hljs-type">char</span> *path)</span><br>&#123;<br>  <span class="hljs-type">char</span> buf[<span class="hljs-number">512</span>], *p;<br>  <span class="hljs-type">int</span> fd;<br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">dirent</span> <span class="hljs-title">de</span>;</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">stat</span> <span class="hljs-title">st</span>;</span><br><br>  <span class="hljs-keyword">if</span>((fd = open(path, <span class="hljs-number">0</span>)) &lt; <span class="hljs-number">0</span>)&#123;<br>    <span class="hljs-built_in">fprintf</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;ls: cannot open %s\n&quot;</span>, path);<br>    <span class="hljs-keyword">return</span>;<br>  &#125;<br><br>  <span class="hljs-keyword">if</span>(fstat(fd, &amp;st) &lt; <span class="hljs-number">0</span>)&#123;<br>    <span class="hljs-built_in">fprintf</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;ls: cannot stat %s\n&quot;</span>, path);<br>    close(fd);<br>    <span class="hljs-keyword">return</span>;<br>  &#125;<br><br>  <span class="hljs-keyword">switch</span>(st.type)&#123;<br>  <span class="hljs-comment">//如果是文件</span><br>  <span class="hljs-keyword">case</span> T_FILE:<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s %d %d %l\n&quot;</span>, fmtname(path), st.type, st.ino, st.size);<br>    <span class="hljs-keyword">break</span>;<br><br>  <span class="hljs-comment">//如果是目录</span><br>  <span class="hljs-keyword">case</span> T_DIR:<br>    <span class="hljs-keyword">if</span>(<span class="hljs-built_in">strlen</span>(path) + <span class="hljs-number">1</span> + DIRSIZ + <span class="hljs-number">1</span> &gt; <span class="hljs-keyword">sizeof</span> buf)&#123;<br>      <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;ls: path too long\n&quot;</span>);<br>      <span class="hljs-keyword">break</span>;<br>    &#125;<br>    <span class="hljs-built_in">strcpy</span>(buf, path);<br>    p = buf+<span class="hljs-built_in">strlen</span>(buf);<br>    *p++ = <span class="hljs-string">&#x27;/&#x27;</span>;<br>    <span class="hljs-keyword">while</span>(read(fd, &amp;de, <span class="hljs-keyword">sizeof</span>(de)) == <span class="hljs-keyword">sizeof</span>(de))&#123;<br>      <span class="hljs-keyword">if</span>(de.inum == <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">continue</span>;<br>      memmove(p, de.name, DIRSIZ);<br>      p[DIRSIZ] = <span class="hljs-number">0</span>;<br>      <span class="hljs-keyword">if</span>(stat(buf, &amp;st) &lt; <span class="hljs-number">0</span>)&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;ls: cannot stat %s\n&quot;</span>, buf);<br>        <span class="hljs-keyword">continue</span>;<br>      &#125;<br>      <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s %d %d %d\n&quot;</span>, fmtname(buf), st.type, st.ino, st.size);<br>    &#125;<br>    <span class="hljs-keyword">break</span>;<br>  &#125;<br>  close(fd);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这部分又是干什么呢？答案就是ls，列出目录内容。</p>
+<p>它分为两种情况：1.如果是文件，就直接打印文件信息；2.如果是目录，就遍历目录中每个文件和子目录，并打印其信息。</p>
+<p>我们试着使用一下这个<code>ls.c</code>：</p>
+<p>假设你的目录结构如下：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs stylus">/home/joolin/xv6-labs-<span class="hljs-number">2020</span>/user/<br><br>├── ls<span class="hljs-selector-class">.c</span><br><br>├── file1<span class="hljs-selector-class">.txt</span><br><br>├── file2<span class="hljs-selector-class">.txt</span><br><br>└── subdir<br><br>  ├── file3<span class="hljs-selector-class">.txt</span><br><br>  └── file4.txt`<br></code></pre></td></tr></table></figure>
+
+<p>首先，你需要在 xv6 中编译 <code>ls.c</code> 文件：</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">gcc -o <span class="hljs-keyword">ls</span> <span class="hljs-keyword">ls</span>.c<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li><p><strong>列出当前目录的内容</strong>：</p>
+<p>如果你在 [user](vscode-file:&#x2F;&#x2F;vscode-app&#x2F;d:&#x2F;Microsoft VS Code&#x2F;resources&#x2F;app&#x2F;out&#x2F;vs&#x2F;code&#x2F;electron-sandbox&#x2F;workbench&#x2F;workbench.html) 目录下运行 <code>ls</code> 命令而不带任何参数，它将列出当前目录的内容：</p>
+<p><code>./ls</code></p>
+<p>输出可能如下：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">file1</span>.txt <span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">100</span><br><br><span class="hljs-attribute">file2</span>.txt <span class="hljs-number">1</span> <span class="hljs-number">3</span> <span class="hljs-number">200</span><br><br><span class="hljs-attribute">subdir</span>  <span class="hljs-number">2</span> <span class="hljs-number">4</span> <span class="hljs-number">4096</span><br></code></pre></td></tr></table></figure>
+
+<p>我们只举这么一个例子，目的只是为了知道它究竟有什么用。</p>
+<p>解释输出：</p>
+</li>
+</ol>
+<ul>
+<li><code>file1.txt</code>、<code>file2.txt</code> 是文件名。</li>
+<li><code>1</code> 是文件类型（<code>1</code> 表示普通文件，<code>2</code> 表示目录）。</li>
+<li><code>2</code>、<code>3</code>、<code>4</code>、<code>5</code>、<code>6</code> 是 inode 号。</li>
+<li><code>100</code>、<code>200</code>、<code>300</code>、<code>400</code>、<code>4096</code> 是文件大小（以字节为单位）。</li>
+</ul>
+<p>通过例子，你可以看到 <code>ls.c</code> 程序如何列出目录中的文件和子目录，并显示它们的详细信息。</p>
+<p>好！现在我们知道了ls.c的作用，那么再去模仿其改写find.c岂不是得心应手？</p>
+<p>我们需要根据find.c的需求来进行程序的编写。</p>
+<p>它要我们做什么？</p>
+<p><code>ls.c</code> 用于列出目录内容，而 <code>find.c</code> 用于查找符合条件的文件。</p>
+<p>可以理解为ls.c是遍历列出，而find.c是指定内容。</p>
+<p>我们都知道文件系统是一层一层的，那么自然而然联想到递归。</p>
+<p>所以我们的函数实现也会使用到递归。</p>
+<p>而模仿ls.c中的代码，我们知道首先要判断是否能获取到目录和文件属性，然后要针对不同类型的文件进行不同的处理。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//错误情况</span><br><span class="hljs-keyword">if</span> ((fd = open(path, <span class="hljs-number">0</span>)) &lt; <span class="hljs-number">0</span>)<br>&#123;<br>    <span class="hljs-built_in">fprintf</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;find: cannot open %s\n&quot;</span>, path);<br>    <span class="hljs-keyword">return</span>;<br>&#125;<br><br><span class="hljs-keyword">if</span> (fstat(fd, &amp;st) &lt; <span class="hljs-number">0</span>)<br>&#123;<br>    <span class="hljs-built_in">fprintf</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;find: cannot stat %s\n&quot;</span>, path);<br>    close(fd);<br>    <span class="hljs-keyword">return</span>;<br>&#125;<br><span class="hljs-comment">//不同类型不同处理</span><br><span class="hljs-keyword">switch</span> (st.type)<br>&#123;<br><span class="hljs-keyword">case</span> T_FILE:<br>    <span class="hljs-built_in">fprintf</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;path error\n&quot;</span>);<br>    <span class="hljs-keyword">return</span>;<br><span class="hljs-keyword">case</span> T_DIR:<br>    ...<br>    <span class="hljs-keyword">break</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>针对文件就直接返回错误</p>
+<p>针对目录就继续处理。</p>
+<p>首先处理目录项。注意目录与目录项是不一样的，这里着重讲一下：</p>
+<p>目录（Directory）</p>
+<ul>
+<li><strong>定义</strong>：目录是文件系统中的一种特殊文件，用于包含其他文件和子目录。目录本身是一个文件，但它的内容是一个文件列表。</li>
+<li>也就是说它是一个列表。</li>
+</ul>
+<p>目录项（Directory Entry）</p>
+<ul>
+<li><strong>定义</strong>：目录项是目录中的一个条目，表示目录中的一个文件或子目录。每个目录项包含文件或子目录的名称和 inode 号。</li>
+<li>也就是说它可以是一个实际的文件。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//处理目录</span><br><span class="hljs-built_in">strcpy</span>(buf, path);<br>p = buf + <span class="hljs-built_in">strlen</span>(buf);<br>*p++ = <span class="hljs-string">&#x27;/&#x27;</span>;<br><span class="hljs-keyword">while</span> (read(fd, &amp;de, <span class="hljs-keyword">sizeof</span>(de)) == <span class="hljs-keyword">sizeof</span>(de))<br>&#123;<br>    <span class="hljs-keyword">if</span> (de.inum == <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">continue</span>;<br>    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">strcmp</span>(de.name, <span class="hljs-string">&quot;.&quot;</span>) || !<span class="hljs-built_in">strcmp</span>(de.name, <span class="hljs-string">&quot;..&quot;</span>))<br>        <span class="hljs-keyword">continue</span>;<br>    memmove(p, de.name, DIRSIZ);<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//处理目录项</span><br><span class="hljs-keyword">if</span> ((fd1 = open(buf, <span class="hljs-number">0</span>)) &gt;= <span class="hljs-number">0</span>)<br>&#123;<br>    <span class="hljs-keyword">if</span> (fstat(fd1, &amp;st) &gt;= <span class="hljs-number">0</span>)<br>    &#123;<br>        <span class="hljs-keyword">switch</span> (st.type)<br>        &#123;<br>        <span class="hljs-keyword">case</span> T_FILE:<br>            <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">strcmp</span>(de.name, name))<br>            &#123;<br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>, buf);<br>            &#125;<br>            close(fd1);<br>            <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">case</span> T_DIR:<br>            close(fd1);<br>            find(buf, name);<br>            <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">case</span> T_DEVICE:<br>            close(fd1);<br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>打开目录项并获取其文件属性。如果是文件且文件名匹配，打印文件路径；如果是目录，递归调用 <code>find</code> 函数继续搜索；如果是设备文件，直接关闭文件描述符。</p>
+<h2 id="完整代码-3"><a href="#完整代码-3" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/types.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/stat.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;user/user.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/fs.h&quot;</span></span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">find</span><span class="hljs-params">(<span class="hljs-type">char</span> *path, <span class="hljs-type">char</span> *name)</span><br>&#123;<br>    <span class="hljs-type">char</span> buf[<span class="hljs-number">128</span>], *p; <span class="hljs-comment">// 缓冲区</span><br>    <span class="hljs-type">int</span> fd, fd1;       <span class="hljs-comment">// 文件描述符、</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">dirent</span> <span class="hljs-title">de</span>;</span>  <span class="hljs-comment">// 目录项</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">stat</span> <span class="hljs-title">st</span>;</span>    <span class="hljs-comment">// 文件属性</span><br><br>    <span class="hljs-comment">// 如果文件描述符&lt;0，则说明文件打开失败</span><br>    <span class="hljs-keyword">if</span> ((fd = open(path, <span class="hljs-number">0</span>)) &lt; <span class="hljs-number">0</span>)<span class="hljs-comment">//这里的参数0表示以只读方式打开文件</span><br>    &#123;<br>        <span class="hljs-built_in">fprintf</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;find: cannot open %s\n&quot;</span>, path);<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 如果文件属性获取失败，则文件打开失败</span><br>    <span class="hljs-keyword">if</span> (fstat(fd, &amp;st) &lt; <span class="hljs-number">0</span>)<br>    &#123;<br>        <span class="hljs-built_in">fprintf</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;find: cannot stat %s\n&quot;</span>, path);<br>        close(fd);<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">switch</span> (st.type)<br>    &#123;<br>    <span class="hljs-keyword">case</span> T_FILE:<br>        <span class="hljs-comment">// 文件</span><br>        <span class="hljs-comment">/* code */</span><br>        <span class="hljs-built_in">fprintf</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;path error\n&quot;</span>); <span class="hljs-comment">// 路径错误</span><br>        <span class="hljs-keyword">return</span>;<br>    <span class="hljs-keyword">case</span> T_DIR:<br>        <span class="hljs-comment">// 目录</span><br>        <span class="hljs-built_in">strcpy</span>(buf, path);     <span class="hljs-comment">// 复制路径</span><br>        p = buf + <span class="hljs-built_in">strlen</span>(buf); <span class="hljs-comment">// 指针指向路径末尾</span><br>        *p++ = <span class="hljs-string">&#x27;/&#x27;</span>;            <span class="hljs-comment">// 路径末尾加上&#x27;/&#x27;,表示这是个目录</span><br>        <span class="hljs-keyword">while</span> (read(fd, &amp;de, <span class="hljs-keyword">sizeof</span>(de)) == <span class="hljs-keyword">sizeof</span>(de))<span class="hljs-comment">//循环读取目录项</span><br>        &#123;<br>            &#123; <span class="hljs-comment">// 遍历搜索目录</span><br>                <span class="hljs-keyword">if</span> (de.inum == <span class="hljs-number">0</span>)<br>                    <span class="hljs-keyword">continue</span>; <span class="hljs-comment">// 如果inum为0，则说明该目录为空</span><br>            &#125;<br>            <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">strcmp</span>(de.name, <span class="hljs-string">&quot;.&quot;</span>) || !<span class="hljs-built_in">strcmp</span>(de.name, <span class="hljs-string">&quot;..&quot;</span>)) <span class="hljs-comment">// 如果目录名为.或者..，则跳过</span><br><br>            &#123;<br>                <span class="hljs-keyword">continue</span>;<br>            &#125;<br>            memmove(p, de.name, DIRSIZ); <span class="hljs-comment">// 将目录名复制到p指向的位置</span><br>            <span class="hljs-keyword">if</span> ((fd1 = open(buf, <span class="hljs-number">0</span>)) &gt;= <span class="hljs-number">0</span>)<br>            &#123;<br>                <span class="hljs-keyword">if</span> (fstat(fd1, &amp;st) &gt;= <span class="hljs-number">0</span>)<br>                &#123;<br>                    <span class="hljs-keyword">switch</span> (st.type)<br>                    &#123;<br>                    <span class="hljs-keyword">case</span> T_FILE:                    <span class="hljs-comment">// 如果是文件，进行文件路径打印</span><br>                        <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">strcmp</span>(de.name, name)) <span class="hljs-comment">// 如果找到了文件，即目标文件名和文件名一致</span><br>                        &#123;<br>                            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>, buf); <span class="hljs-comment">// 打印文件路径</span><br>                        &#125;<br>                        close(fd1);<br>                        <span class="hljs-keyword">break</span>;<br>                    <span class="hljs-keyword">case</span> T_DIR:     <span class="hljs-comment">// 如果是目录，就递归调用find函数，直到找到最终的目标文件名</span><br>                        close(fd1); <span class="hljs-comment">// 关闭文件描述符</span><br>                        find(buf, name);<br>                        <span class="hljs-keyword">break</span>;<br>                    <span class="hljs-keyword">case</span> T_DEVICE:<span class="hljs-comment">//如果是设备文件，直接关闭文件描述符</span><br>                        close(fd1);<br>                        <span class="hljs-keyword">break</span>;           <br>                    &#125;<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">break</span>;<br>    &#125;<br>    close(fd);<br>&#125;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span><br>&#123;<br>    <span class="hljs-keyword">if</span> (argc != <span class="hljs-number">3</span>)<br>    &#123;<br>        <span class="hljs-built_in">fprintf</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;Usage: find path name\n&quot;</span>);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>    &#125;<br>    find(argv[<span class="hljs-number">1</span>], argv[<span class="hljs-number">2</span>]);<br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="实验5-xargs（难度：Moderate）"><a href="#实验5-xargs（难度：Moderate）" class="headerlink" title="实验5 xargs（难度：Moderate）"></a>实验5 xargs（难度：Moderate）</h1><h2 id="实验要求-4"><a href="#实验要求-4" class="headerlink" title="实验要求"></a>实验要求</h2><blockquote>
+<p>编写一个简化版UNIX的<code>xargs</code>程序：<strong>它从标准输入中按行读取，并且为每一行执行一个命令，将行作为参数提供给命令。</strong>你的解决方案应该在*<strong>user&#x2F;xargs.c*</strong></p>
+</blockquote>
+<h2 id="提示-4"><a href="#提示-4" class="headerlink" title="提示"></a>提示</h2><ul>
+<li>使用<code>fork</code>和<code>exec</code>对每行输入调用命令，在父进程中使用<code>wait</code>等待子进程完成命令。</li>
+<li>要读取单个输入行，请一次读取一个字符，直到出现换行符（’\n’）。</li>
+<li>***kernel&#x2F;param.h***声明<code>MAXARG</code>，如果需要声明<code>argv</code>数组，这可能很有用。</li>
+<li>将程序添加到***Makefile***中的<code>UPROGS</code>。</li>
+<li>对文件系统的更改会在qemu的运行过程中保持不变；要获得一个干净的文件系统，请运行<code>make clean</code>，然后<code>make qemu</code></li>
+</ul>
+<h2 id="实验思路-4"><a href="#实验思路-4" class="headerlink" title="实验思路"></a>实验思路</h2><p>实验要求我们编写一个程序，读取行内容，并且按照行来执行命令，执行完后将行作为参数提供给命令。</p>
+<p>提示中说我们可以看看<code>fork</code>和<code>exec</code>，前者我们已经了解，我们直接去看看后者。</p>
+<p><img src="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20250308011848902.png" srcset="/img/loading.gif" lazyload alt="image-20250308011848902"></p>
+<p>这里传了两个参数，一个是表示要<strong>执行的可执行文件的路径</strong>，一个是表示<strong>命令行参数数组</strong>。</p>
+<p>我们从名字上来分析：exec——execute，也就是执行的意思，那么再结合其给定的参数不难猜——它的作用是<strong>用来通过给定参数读取并执行文件</strong>。</p>
+<p>好，接下来我们根据实验要求逐步实现。</p>
+<p>首先它要我们读取行内容，那么我们就使用<code>read</code>就完事了。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">char</span> stdIn[<span class="hljs-number">512</span>];<br><span class="hljs-type">int</span> size = read(<span class="hljs-number">0</span>, stdIn, <span class="hljs-keyword">sizeof</span> stdIn);<br></code></pre></td></tr></table></figure>
+
+<p>其次它要我们按照行来执行指令，那么我们首先需要知道的是行的数量，在C语言中，换行通常使用”\n”来表示，我们将其作为指标进行计算即可。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> line = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k=<span class="hljs-number">0</span>;k&lt;size;k++)&#123;<br><span class="hljs-keyword">if</span>(stdIn[k]==<span class="hljs-string">&quot;\n&quot;</span>)&#123;<br>	line++;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>然后我们直接将数据按照行的形式进行存储，这里的话我们可以用到一个二维数组来进行存储。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">char</span> output[line][<span class="hljs-number">64</span>];<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt; size; ++k) &#123;<br>    output[i][j++] = stdIn[k];<br>    <span class="hljs-keyword">if</span> (stdIn[k] == <span class="hljs-string">&#x27;\n&#x27;</span>) &#123;<br>        output[i][j - <span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;<br>        ++i;<br>        j = <span class="hljs-number">0</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>接下来，我们就要进行执行的过程了。我们根据提示，得知命令行参数数组的大小不能超过MAXARG；将每一行数据作为参数拼接到命令参数后，并通过 <code>fork</code> 创建子进程执行命令。<code>exec(argv[1], arguments)</code> 用于执行指定的命令，并将参数传递给它。父进程等待子进程结束。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">char</span> *arguments[MAXARG];<br><span class="hljs-keyword">for</span> (j = <span class="hljs-number">0</span>; j &lt; argc - <span class="hljs-number">1</span>; ++j) &#123;<br>    arguments[j] = argv[<span class="hljs-number">1</span> + j];<br>&#125;<br>i = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">while</span> (i &lt; line) &#123;<br>    arguments[j] = output[i++];<br>    <span class="hljs-keyword">if</span> (fork() == <span class="hljs-number">0</span>) &#123;<br>        exec(argv[<span class="hljs-number">1</span>], arguments);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>    &#125;<br>    wait(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>主要代码都已完成。需要注意的是，这个程序可以用来批量处理数据，但是不能MAXARG大小，否则xv6会资源报错。</p>
+<h2 id="完整代码-4"><a href="#完整代码-4" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// user/xargs.c</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/types.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/stat.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;user/user.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/param.h&quot;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span> &#123;<br>    <span class="hljs-comment">//从标准输入读取数据</span><br>    <span class="hljs-type">char</span> stdIn[<span class="hljs-number">512</span>];<br>    <span class="hljs-type">int</span> size = read(<span class="hljs-number">0</span>, stdIn, <span class="hljs-keyword">sizeof</span> stdIn);<br>    <span class="hljs-comment">//将数据分行存储</span><br>    <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>;<br>    <span class="hljs-type">int</span> line = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt; size; ++k) &#123;<br>        <span class="hljs-keyword">if</span> (stdIn[k] == <span class="hljs-string">&#x27;\n&#x27;</span>) &#123; <span class="hljs-comment">// 根据换行符的个数统计数据的行数</span><br>            ++line;<br>        &#125;<br>    &#125;<br>    <span class="hljs-type">char</span> output[line][<span class="hljs-number">64</span>]; <span class="hljs-comment">// 根据提示中的MAXARG，命令参数长度最长为32个字节</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt; size; ++k) &#123;<br>        output[i][j++] = stdIn[k];<br>        <span class="hljs-keyword">if</span> (stdIn[k] == <span class="hljs-string">&#x27;\n&#x27;</span>) &#123;<br>            output[i][j - <span class="hljs-number">1</span>] = <span class="hljs-number">0</span>; <span class="hljs-comment">// 用0覆盖掉换行符。C语言没有字符串类型，char类型的数组中，&#x27;0&#x27;表示字符串的结束</span><br>            ++i; <span class="hljs-comment">// 继续保存下一行数据</span><br>            j = <span class="hljs-number">0</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">//将数据分行拼接到argv[2]后，并运行</span><br>    <span class="hljs-type">char</span> *arguments[MAXARG];<br>    <span class="hljs-keyword">for</span> (j = <span class="hljs-number">0</span>; j &lt; argc - <span class="hljs-number">1</span>; ++j) &#123;<br>        arguments[j] = argv[<span class="hljs-number">1</span> + j]; <span class="hljs-comment">// 从argv[1]开始，保存原本的命令+命令参数</span><br>    &#125;<br>    i = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span> (i &lt; line) &#123;<br>        arguments[j] = output[i++]; <span class="hljs-comment">// 将每一行数据都分别拼接在原命令参数后</span><br>        <span class="hljs-keyword">if</span> (fork() == <span class="hljs-number">0</span>) &#123;<br>            exec(argv[<span class="hljs-number">1</span>], arguments);<br>            <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>        &#125;<br>        wait(<span class="hljs-number">0</span>);<br>    &#125;<br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/OS/" class="category-chain-item">OS</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【6S081】Lab Note1</div>
+      <div>https://skrrapper.github.io/2025/03/09/【6S081】实验笔记1/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Joolin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年3月9日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/12/19/ABOUT-ME/" title="ABOUT ME">
+                        <span class="hidden-mobile">ABOUT ME</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"IwoxGGOxuWIRyCWHqXHYHBws-gzGzoHsz","appKey":"VSufRvKEGNSLiusV4BYrkCxE","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://iwoxggox.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
