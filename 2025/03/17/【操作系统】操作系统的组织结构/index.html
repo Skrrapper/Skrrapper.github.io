@@ -1,0 +1,743 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/joolin.png">
+  <link rel="icon" href="/img/joolin.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Joolin">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="【操作系统】操作系统的组织结构 今天主要讨论四个话题，分别是：  隔离性solation。隔离性是设计操作系统组织结构的驱动力。 内核模式和用户模式Kernel和User mode。这两种模式用来隔离操作系统内核和用户应用程序。 系统调用System calls。系统调用是你的应用程序能够转换到内核执行的基本方法，这样你的用户态应用程序才能使用内核服务。 最后我们会看到所有的这些是如何以一种简单的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【操作系统】操作系统的组织结构">
+<meta property="og:url" content="https://skrrapper.github.io/2025/03/17/%E3%80%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E3%80%91%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%84%E7%BB%87%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:site_name" content="Joolin">
+<meta property="og:description" content="【操作系统】操作系统的组织结构 今天主要讨论四个话题，分别是：  隔离性solation。隔离性是设计操作系统组织结构的驱动力。 内核模式和用户模式Kernel和User mode。这两种模式用来隔离操作系统内核和用户应用程序。 系统调用System calls。系统调用是你的应用程序能够转换到内核执行的基本方法，这样你的用户态应用程序才能使用内核服务。 最后我们会看到所有的这些是如何以一种简单的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20250312112354831.png">
+<meta property="og:image" content="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20250312115556740.png">
+<meta property="og:image" content="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20250312115825912.png">
+<meta property="og:image" content="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20250312115838818.png">
+<meta property="og:image" content="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20250312115848202.png">
+<meta property="article:published_time" content="2025-03-17T06:20:07.000Z">
+<meta property="article:modified_time" content="2025-03-17T06:23:07.242Z">
+<meta property="article:author" content="Joolin">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20250312112354831.png">
+  
+  
+  
+  <title>【操作系统】操作系统的组织结构 - Joolin</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"skrrapper.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":100,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Joolin</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">【操作系统】操作系统的组织结构</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-03-17 14:20" pubdate>
+          2025年3月17日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          29 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">【操作系统】操作系统的组织结构</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>【操作系统】操作系统的组织结构</p>
+<p>今天主要讨论四个话题，分别是：</p>
+<ul>
+<li>隔离性<code>solation</code>。隔离性是设计操作系统组织结构的驱动力。</li>
+<li>内核模式和用户模式<code>Kernel</code>和<code>User mode</code>。这两种模式用来隔离操作系统内核和用户应用程序。</li>
+<li>系统调用<code>System calls</code>。系统调用是你的应用程序能够转换到内核执行的基本方法，这样你的用户态应用程序才能使用内核服务。</li>
+<li>最后我们会看到所有的这些是如何以一种简单的方式在XV6中实现。</li>
+</ul>
+<blockquote>
+<p>在学习之前你应该知道的：</p>
+</blockquote>
+<p>首先我们来看一个我们常用的编程语言概念：库函数。</p>
+<p>库函数通常用于调用另外一个文件里的函数和用法，来运行程序。然而，它也有缺点：<strong>多个应用程序运行时，必须使它们表现良好，那么就会定期舍弃一些东西</strong><br><strong>以保证良好运行</strong></p>
+<p>那么当我们没有操作系统的时候，应用程序就会通过类似库函数的东西来与硬件直接交互，那么CPU就会不断地在多个应用程序之间切换，为了保证它们都表现良好，从而会显得CPU很“忙”。</p>
+<p>并且，假如说CPU在运行一个函数，这个函数是一个死循环，那么就永远不会把CPU释放出去，进而导致其他应用程序不能运行。</p>
+<p>除此之外，还有可能：由于应用程序直接运行在硬件资源之上，那么每个应用程序的文本，代码和数据都直接保存在物理内存中，进而导致两个应用程序之间没有边界，可能出现<strong>覆盖</strong>的情况，那很坏了。也就是说应用程序可能会“干坏事”，干扰别的程序。</p>
+<h1 id="操作系统的隔离性"><a href="#操作系统的隔离性" class="headerlink" title="操作系统的隔离性"></a>操作系统的隔离性</h1><p>我们称这种直接接触的做法为<strong>弱隔离性</strong>，隔离性不好，那么交互就会进行不好。</p>
+<p>所以使用操作系统，来作为一个中间商，提高<strong>隔离性</strong>。那么具体应该怎么做呢？</p>
+<p><strong>我们需要禁止应用程序直接访问敏感地硬件资源，而是将资源抽象为服务，通过操作系统来进行交互操作。</strong></p>
+<p>Unix进程中很多交互形式都是通过<strong>文件描述符</strong>实现，文件描述符说到底也就是一种<strong>规则</strong>，通过代码实现其调用(它抽象了很多细节，简化交互)</p>
+<p>同时我们需要注意的是：<strong>进程本身不是CPU，而是它们对应了、抽象化了CPU</strong></p>
+<p>也就是说：<strong>应用程序不能直接与CPU交互，而是与进程交互</strong></p>
+<p>举个关于<strong>隔离性</strong>的例子，<strong>我们认为<code>exec</code>抽象了内存</strong>。当我们在执行<code>exec</code>系统调用的时候，我们会传入一个文件名，而这个文件名对应了一个应用程序的内存镜像。内存镜像里面包括了程序对应的指令，全局的数据。应用程序可以逐渐扩展自己的内存，但是应用程序并没有直接访问物理内存的权限，例如应用程序不能直接访问物理内存的1000-2000这段地址。不能直接访问的原因是，<strong>操作系统会提供内存隔离并控制内存，它会在应用程序和硬件资源之间提供一个中间层</strong>。exec是这样一种系统调用，它表明了应用程序不能直接访问物理内存。</p>
+<p>对于<code>files</code>的调用来说也是，它抽象了磁盘。在Unix中，用户唯一与存储系统进行交互的方式就是通过<code>files</code>。</p>
+<p>准确来说，<strong>操作系统将一个一个与硬件的操作抽象成了接口的概念，供用户程序使用</strong>。就像是厨师给你做了一道菜，你不需要知道它怎么做的，你只需要知道它好不好吃就可以了。</p>
+<h1 id="操作系统的防御性"><a href="#操作系统的防御性" class="headerlink" title="操作系统的防御性"></a>操作系统的防御性</h1><p>实际上防御性的概念是与隔离性同一进行的。</p>
+<p>操作系统需要确保所有的组件都能工作，所以它需要做好准备抵御来自应用程序的攻击。攻击或许包括以下两种但不限于这两种。</p>
+<ul>
+<li>攻击者恶意编写程序或参数来使得操作系统崩溃</li>
+<li>应用程序打破隔离影响到其他应用程序甚至是内核。</li>
+</ul>
+<h1 id="支持隔离性的硬件操作"><a href="#支持隔离性的硬件操作" class="headerlink" title="支持隔离性的硬件操作"></a>支持隔离性的硬件操作</h1><p>一般我们会通过硬件来实现隔离性和防御性，包括以下两种：</p>
+<ul>
+<li>User&#x2F;Kernel Mode</li>
+<li>page table或者虚拟内存（Virtual Memory）</li>
+</ul>
+<p>接下来进行介绍。</p>
+<h2 id="User-Kernel-Mode"><a href="#User-Kernel-Mode" class="headerlink" title="User&#x2F;Kernel Mode"></a>User&#x2F;Kernel Mode</h2><p>处理器通常会有三种处理模式，即用户模式、管理模式还有机器模式，在这里我们主要讨论前两种模式。</p>
+<p>首先我们介绍下几种指令。</p>
+<h3 id="普通权限指令"><a href="#普通权限指令" class="headerlink" title="普通权限指令"></a>普通权限指令</h3><p>普通权限的指令都是一些你们熟悉的指令，例如将两个寄存器相加的指令ADD、将两个寄存器相减的指令SUB、跳转指令JRC、BRANCH指令等等。这些都是普通权限指令，<strong>所有的应用程序都允许执行这些指令</strong>。</p>
+<h3 id="特殊权限指令"><a href="#特殊权限指令" class="headerlink" title="特殊权限指令"></a>特殊权限指令</h3><p>特殊权限指令主要是<strong>一些直接操纵硬件的指令和设置保护的指令</strong>，例如设置page table寄存器、关闭时钟中断。在处理器上有各种各样的状态，操作系统会使用这些状态，但是只能通过特殊权限指令来变更这些状态。</p>
+<h3 id="各个模式下允许执行的指令"><a href="#各个模式下允许执行的指令" class="headerlink" title="各个模式下允许执行的指令"></a>各个模式下允许执行的指令</h3><p>机器模式下：主要用于配置计算机；</p>
+<p>管理模式下，CPU被允许执行<strong>特权指令</strong>；</p>
+<p>用户模式下，应用程序被允许执行<strong>普通指令</strong>(只能)，此时处于管理模式下的软件可以执行<strong>特权指令</strong>。</p>
+<p>如果用户想要执行或者调用内核函数，那么就必须要实现到内核的过渡，(当cpu从用户模式切换到管理模式时(<strong>通过内核指定的入口点进入</strong>)，内核可以决定是否允许其进行管理操作。)</p>
+<h2 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h2><p>基本上所有的CPU都支持虚拟内存。一般来说页表（Page Table）将虚拟内存地址与物理内存地址进行了对应， 这里称为 <strong>映射</strong>。</p>
+<p><strong>每一个进程都会有自己独立的page table</strong>，这样的话，每一个进程只能访问出现在自己page table中的物理内存。这样使得每一个进程都有不重合的物理内存，这样一个进程就不能访问其他进程的物理内存，因为其他进程的物理内存都不在它的page table中。一个进程甚至都不能随意编造一个内存地址，然后通过这个内存地址来访问其他进程的物理内存。这样就给了我们内存的<strong>强隔离性</strong>。</p>
+<p><img src="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20250312112354831.png" srcset="/img/loading.gif" lazyload alt="image-20250312112354831"></p>
+<p>如果把一个框看作是一个页表，也就是说每个接口都有一个自己的框，同时它也不能进入别人的框。</p>
+<h1 id="操作系统如何连接应用程序和硬件？"><a href="#操作系统如何连接应用程序和硬件？" class="headerlink" title="操作系统如何连接应用程序和硬件？"></a>操作系统如何连接应用程序和硬件？</h1><p>必须要有一种方式可以使得用户的应用程序能够将控制权以一种协同工作的方式转移到内核，这样内核才能提供相应的服务。</p>
+<p>在RISC-V中，有一个专门的指令用来实现这个功能，叫做<code>ECALL</code>。<code>ECALL</code>接收一个数字参数，<strong>当一个用户程序想要将程序执行的控制权转移到内核，它只需要执行<code>ECALL</code>指令，并传入一个数字。这里的数字参数代表了应用程序想要调用的System Call。</strong></p>
+<p>当我们执行一些应用层面的程序时，我们并不是直接调用操作系统中对应的函数，而是调用类似于<code>ECALL</code>的指令，并将对应的数字参数传给它，通过它跳转到内核。</p>
+<p>需要注意的是，一般这种调用指令应该尽量做到稀少甚至是唯一，这样才能保证强隔离性和防御性。</p>
+<h1 id="内核组织"><a href="#内核组织" class="headerlink" title="内核组织"></a>内核组织</h1><p>我们知道了内核是操作系统概念中极其重要的一环，因为它具备系统调用的作用，可以转移控制权，那么它就掌握了计算机系统的“生死大权”。所以内核必须是要有信用的，一般称为<strong>可被信任的计算空间（Trusted Computing Base），在一些安全的术语中也被称为TCB。</strong></p>
+<p>那么问题来了，是什么来运行内核呢？我们可以说操作系统是作为一个中间商来进行交互，但是并没有说它就有完全的权力来运行内核模式。当然，也不是不行。这就涉及到内核的组织模式了。</p>
+<p>一般来说，内核组织分为 <strong>宏内核</strong>和 <strong>微内核</strong>，接下来分别进行介绍。</p>
+<h2 id="宏内核"><a href="#宏内核" class="headerlink" title="宏内核"></a>宏内核</h2><p>整个操作系统代码都运行在kernel mode中。</p>
+<p>这样所有系统调用都以管理模式运行。</p>
+<p><strong>优点就是</strong>：在这种组织中，整个操作系统拥有完整的硬件特权，无需顾虑哪里不需要完全的硬件特权。</p>
+<p>另一方面，如果你去看一个操作系统，它包含了各种各样的组成部分，比如说文件系统，虚拟内存，进程管理，这些都是操作系统内实现了特定功能的子模块。宏内核的优势在于，因为这些子模块现在都位于同一个程序中，它们可以紧密的集成在一起，这样的集成提供很好的性能。例如Linux，它就有很不错的性能。</p>
+<p><strong>缺点是</strong>：宏内核太过于放任权利，稍有错误就可能会导致内核运行失败。</p>
+<h2 id="微内核"><a href="#微内核" class="headerlink" title="微内核"></a>微内核</h2><p>减少内核中的代码，但是不完全减没。</p>
+<p>最大限度减少管理模式下运行的操作系统代码量，并在用户模式下执行大部分操作系统，出现了<strong>微内核组织</strong>。</p>
+<p>通常对于微内核，会将操作系统最基本也是最核心的部分放在内核中，其他绝大部分功能放在微内核外的进程中实现。</p>
+<p><strong>优点</strong>：减少了bug</p>
+<p><strong>缺点</strong>：与宏内核对比，在宏内核中如果一个应用程序需要与文件系统交互，只需要完成1次用户空间&lt;-&gt;内核空间的跳转，但是微内核的的跳转是宏内核的两倍。因为它权限变少了，那么流程自然而然也就变多了。</p>
+<p>我们来看一个例子。</p>
+<blockquote>
+<p>假设我们需要让Shell能与文件系统交互，比如Shell调用了exec，必须有种方式可以接入到文件系统中。通常来说，这里工作的方式是，Shell会通过内核中的IPC系统发送一条消息，内核会查看这条消息并发现这是给文件系统的消息，之后内核会把消息发送给文件系统。（一次跳转）</p>
+<p>文件系统会完成它的工作之后会向IPC系统发送回一条消息说，这是你的exec系统调用的结果，之后IPC系统再将这条消息发送给Shell。（两次跳转）</p>
+</blockquote>
+<p><strong>这样一来，性能自然而然就会降低。同时各个组成部分之间的连结性会降低，使得共享更难实现。</strong></p>
+<p>大多数经典的Unix系统都是宏内核设计，然而也有例如Minix等嵌入式系统使用微内核设计，这取决于操作系统的需求。</p>
+<h1 id="代码怎么实现？"><a href="#代码怎么实现？" class="headerlink" title="代码怎么实现？"></a>代码怎么实现？</h1><p>接下来我们使用xv6来看一下具体的实现流程。</p>
+<h2 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h2><p>首先代码结构通常包含啊三个部分：<code>kernel</code>、<code>user</code>、<code>mkfs</code></p>
+<p><img src="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20250312115556740.png" srcset="/img/loading.gif" lazyload alt="image-20250312115556740"></p>
+<ul>
+<li>第一个是<code>kernel</code>。我们可以ls kernel的内容，里面包含了基本上所有的内核文件。因为XV6是一个宏内核结构，这里所有的文件会被编译成一个叫做kernel的二进制文件，然后这个二进制文件会被运行在kernle mode中。</li>
+<li>第二个部分是<code>user</code>。这基本上是运行在user mode的程序。这也是为什么一个目录称为kernel，另一个目录称为user的原因。</li>
+<li>第三部分叫做<code>mkfs</code>。它会创建一个空的文件镜像，我们会将这个镜像存在磁盘上，这样我们就可以直接使用一个空的文件系统。</li>
+</ul>
+<h2 id="编译流程"><a href="#编译流程" class="headerlink" title="编译流程"></a>编译流程</h2><p>Makefile（XV6目录下的文件）会读取一个C文件，例如proc.c；之后调用gcc编译器，生成一个文件叫做proc.s，这是RISC-V 汇编语言文件；之后再走到汇编解释器，生成proc.o，这是汇编语言的二进制格式。</p>
+<p><img src="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20250312115825912.png" srcset="/img/loading.gif" lazyload alt="image-20250312115825912"></p>
+<p>Makefile会为所有内核文件做相同的操作，比如说pipe.c，会按照同样的套路，先经过gcc编译成pipe.s，再通过汇编解释器生成pipe.o。</p>
+<p><img src="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20250312115838818.png" srcset="/img/loading.gif" lazyload alt="image-20250312115838818"></p>
+<p>之后，系统加载器（Loader）会收集所有的.o文件，将它们链接在一起，并生成内核文件。</p>
+<p><img src="https://joolin-1327264753.cos.ap-guangzhou.myqcloud.com/pictures/image-20250312115848202.png" srcset="/img/loading.gif" lazyload alt="image-20250312115848202"></p>
+<p>这里生成的内核文件就是我们将会在QEMU中运行的文件。同时，为了方便，Makefile还会创建kernel.asm，这里包含了内核的完整汇编语言，可以通过查看它来定位究竟是哪个指令导致了Bug。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/OS/" class="category-chain-item">OS</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【操作系统】操作系统的组织结构</div>
+      <div>https://skrrapper.github.io/2025/03/17/【操作系统】操作系统的组织结构/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Joolin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年3月17日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/03/17/%E3%80%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E3%80%91OS%E9%9A%BE%E5%90%97%EF%BC%9F%E5%A5%BD%E7%8E%A9%E5%90%97%EF%BC%9F/" title="【操作系统】OS难吗？好玩吗？">
+                        <span class="hidden-mobile">【操作系统】OS难吗？好玩吗？</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"IwoxGGOxuWIRyCWHqXHYHBws-gzGzoHsz","appKey":"VSufRvKEGNSLiusV4BYrkCxE","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://iwoxggox.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
